@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -11,12 +12,30 @@
 			.center-div {
 		 		text-align: center;
 		 	}
+		 	.right-div{
+		 		text-align: right;
+		 	}
 		 </style>
 	</head>
 	<body>
+	
+		<% 
+			// Only shows the content if the user has a session
+			String user = (String) session.getAttribute("user");
+			if(user == null){
+				response.sendRedirect("index.jsp");
+			} 
+		%>
+	
+		<div class="right-div">
+			<a href="sign-out.jsp">Sign Out</a>
+		</div>
 		<div class="center-div">
 			<h2>Welcome!</h2>
-			<a href="SelectServlet">Users Management</a>
+			<c:if test="${sessionScope.role eq 'admin'}">
+				<a href="SelectServlet">Users Management</a>
+			</c:if>
 		</div>
+		
 	</body>
 </html>

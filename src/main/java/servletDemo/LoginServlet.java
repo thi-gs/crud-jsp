@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import jakarta.servlet.http.HttpSession;
+
 import dao.DaoLogin;
 
 @WebServlet("/LoginServlet")
@@ -20,6 +22,14 @@ public class LoginServlet extends HttpServlet {
         super();
     }
 
+    public String determineUserRole(String username) {
+    	if ("admin".equals(username)) {
+            return "admin";
+        } else {
+            return "user";
+        }
+    }
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
@@ -31,7 +41,17 @@ public class LoginServlet extends HttpServlet {
 			String login = request.getParameter("login");
 			String password = request.getParameter("password");
 		
-			if(daoLogin.loginValidation(login, password)) {
+			if(daoLogin.loginValidation(login, password)) {		
+				
+				// Creating user session
+				HttpSession session = request.getSession();
+				session.setAttribute("user", login);
+				
+				// Method to determine user's role
+				String userRole = determineUserRole(login);
+				session.setAttribute("role", userRole);
+				
+				// Redirecting user
 				RequestDispatcher dispatcher = request.getRequestDispatcher("login-success.jsp");
 				dispatcher.forward(request, response);
 			} else {

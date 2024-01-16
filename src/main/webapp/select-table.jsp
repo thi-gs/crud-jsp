@@ -25,13 +25,26 @@
 </head>
 
 <body>
+
+	<% 
+		// Only shows the content if the user has a session
+		String user = (String) session.getAttribute("user");
+		if(user == null){
+			response.sendRedirect("index.jsp");
+		} 
+	%>
+
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
+	<c:if test="${sessionScope.role eq 'admin'}">
 	<div>
 		<h2>Users table</h2>
 		<br/>
 		<a href="insert-user.jsp">
 			<button type="button" class="btn btn-dark">Create account</button>
+		</a>
+		<a href="login-success.jsp">
+			<button type="button" class="btn btn-primary">Homepage</button>
 		</a>
 		<br/>
 		<br/>
@@ -65,5 +78,6 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	</c:if>
 </body>
 </html>

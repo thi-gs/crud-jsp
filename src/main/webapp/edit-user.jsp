@@ -70,7 +70,7 @@
 		<input type="submit" value="Update User" class="btn btn-success">
 		<a href="SelectServlet">
 				<button type="button" class="btn btn-danger">Cancel</button>
-			</a>
+		</a>
 	</div>
 </form>
 </body>
