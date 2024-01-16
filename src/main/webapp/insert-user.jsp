@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -53,10 +54,20 @@
 					<td><input type="password" id="repeatPassword" name="repeatPassword"></td>
 				</tr>
 			</table>
-			<input type="submit" value="Create Account" class="btn btn-success"> 
-			<a href="index.jsp">
-				<button type="button" class="btn btn-danger">Cancel</button>
-			</a>
+			<input type="submit" value="Create Account" class="btn btn-success">
+			
+			<c:choose>
+				<c:when test="${sessionScope.role eq 'admin'}">
+					<a href="SelectServlet">
+						<button type="button" class="btn btn-danger">Cancel</button>
+					</a>
+				</c:when>
+				<c:otherwise>
+					<a href="index.jsp">
+						<button type="button" class="btn btn-danger">Cancel</button>
+					</a>
+				</c:otherwise>
+			</c:choose>
 		</form>
 	</div>
 	</body>
